@@ -3,7 +3,7 @@ context("test-make_map.R")
 test_that("check make_map", {
 
   data_dir <- system.file("extdata", package = "collar")
-  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronics_2.csv"))
+  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronic_2.csv"))
   dat <-
     tmp %>%
     tidyr::drop_na(longitude) %>%
@@ -26,7 +26,7 @@ test_that("check make_map", {
 test_that("check make_map assertions", {
 
   data_dir <- system.file("extdata", package = "collar")
-  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronics_2.csv"))
+  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronic_2.csv"))
   dat <-
     tmp %>%
     tidyr::drop_na(longitude) %>%

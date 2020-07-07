@@ -1,6 +1,6 @@
-#' Download data from Vectronics' web service
+#' Download data from Vectronic's web service
 #'
-#' A function to download data from the Vectronics' web service. The function relies on a directory containing collar keys \code{key_dir}. The function will then attempt to download the relevant data using the keys in the \code{key_dir} directory. The user may alter the data downloaded by, for example, downloading data after some arbitrary date, downloading different types of data or after a data id.
+#' A function to download data from the Vectronic's web service. The function relies on a directory containing collar keys \code{key_dir}. The function will then attempt to download the relevant data using the keys in the \code{key_dir} directory. The user may alter the data downloaded by, for example, downloading data after some arbitrary date, downloading different types of data or after a data id.
 #'
 #' @inheritParams get_keys
 #' @inheritParams build_vec_url
@@ -11,7 +11,7 @@
 #'
 #'  If desired, the user may limit the amount of data downloaded by supplying a data id or start date. In both cases only data after the data id or date will be downloaded. One value of data_id is required for each collar. For start_date, the user has the option of supplying a single value or one for each collar.
 #'
-#'  The type argument allows the user to download different types of information collected by Vectronics collars. The possible options are
+#'  The type argument allows the user to download different types of information collected by Vectronic collars. The possible options are
 #'
 #' \itemize{
 #'   \item "count" returns count of data records, used with values below
@@ -41,34 +41,34 @@
 #' )
 #'
 #' # Download count of GPS data
-#' fetch_vectronics(path, type = "gps", count = TRUE)
+#' fetch_vectronic(path, type = "gps", count = TRUE)
 #'
 #' # Download count of activity data
-#' fetch_vectronics(path, type = "act", count = TRUE)
+#' fetch_vectronicpath, type = "act", count = TRUE)
 #'
 #' # Download all data
-#' all_dat <- fetch_vectronics(path, type = "gps")
+#' all_dat <- fetch_vectronic(path, type = "gps")
 #'
 #' # Fake multiple key_paths
-#' too_much <- fetch_vectronics(c(path, path), type = "gps")
+#' too_much <- fetch_vectronic(c(path, path), type = "gps")
 #'
 #' # Download data after some data id
 #' id_pos <- all_dat$idposition
 #' data_id <- id_pos[which(id_pos == (max(id_pos) - 10))]
-#' new_dat <- fetch_vectronics(path, type = "gps", after_data_id = data_id)
+#' new_dat <- fetch_vectronic(path, type = "gps", after_data_id = data_id)
 #'
 #' (nrow(new_dat) == 10)
 #'
 #' # Download all data after some acquisition date
 #' after <- "2018-06-30T00:00:00"
-#' after_dat <- fetch_vectronics(
+#' after_dat <- fetch_vectronic(
 #'   path,
 #'   type = "gps",
 #'   start_date = after,
 #'   which_date = "acquisition"
 #' )
 #' }
-fetch_vectronics <- function(key_paths,
+fetch_vectronic <- function(key_paths,
                              base_url = NULL,
                              after_data_id = NULL,
                              type = "gps",
@@ -98,7 +98,7 @@ fetch_vectronics <- function(key_paths,
 #' Extract path(s) to files in a directory
 #'
 #' @param key_dir Path to a directory
-#' @param ext Defaults to keyx, which should be correct for Vectronics key files, but could also be a regular expression used to match any file extension.
+#' @param ext Defaults to keyx, which should be correct for Vectronic key files, but could also be a regular expression used to match any file extension.
 #' @param ... other arguments to pass to list.files, see ?list.files
 #'
 #' @return full path to each file matching \code{ext}
@@ -142,7 +142,7 @@ get_paths <- function(key_dir, ext = "keyx$", ...) {
 #' @inheritParams get_keys
 #'
 #' @details
-#' Vectronics includes the collar ID in the XML of the .keyx file.  The get_id_from_key function gives the user the ability to read the ID encoded in the key file. This function was originally intended for internal package use, but is exported to package users in the hope it is helpful for reporting or other purposes. There is no reason to call it within the established package workflow.
+#' Vectronic includes the collar ID in the XML of the .keyx file.  The get_id_from_key function gives the user the ability to read the ID encoded in the key file. This function was originally intended for internal package use, but is exported to package users in the hope it is helpful for reporting or other purposes. There is no reason to call it within the established package workflow.
 #'
 #' @return character vector of collar IDs
 #' @export
@@ -176,7 +176,7 @@ get_id_from_key <- function(key_paths) {
 
 #' Extract alphanumeric key from key files
 #'
-#' The key is needed to call the Vectronics API and given the length of the key copy and paste errors seems likely.  The functions here help users access the keys in a programmatic fashion. We don't anticipate much need for users to use this function as it was originally intended to be internal to the package, but if listing keys is needed for reporting purposes or otherwise the function is made available.
+#' The key is needed to call the Vectronic API and given the length of the key copy and paste errors seems likely.  The functions here help users access the keys in a programmatic fashion. We don't anticipate much need for users to use this function as it was originally intended to be internal to the package, but if listing keys is needed for reporting purposes or otherwise the function is made available.
 #'
 #' @param key_paths The full path to one or more key files
 #' @family get
@@ -289,7 +289,7 @@ build_vec_url <- function(base_url = NULL,
     is.null(x) | is.null(y)
   }
   assertthat::on_failure(one_null) <- function(call, env) {
-    "The Vectronics API cannot accept both the after_data_id and start_date arguments at the same time.  Please change one or both to NULL."
+    "The Vectronic API cannot accept both the after_data_id and start_date arguments at the same time.  Please change one or both to NULL."
   }
   assertthat::assert_that(one_null(after_data_id, start_date))
   assertthat::assert_that(
@@ -420,7 +420,7 @@ build_vec_urls <- function(base_url = NULL,
   )
 }
 
-#' A basic call to the Vectronics API
+#' A basic call to the Vectronic API
 #'
 #' @param url a character string representing the url to query
 #' @inheritParams fetch_ats
@@ -437,7 +437,7 @@ call_vec_api <- function(url, rename_fun = adj_col_nms) {
 
   st_time <- Sys.time()
 
-  message("Downloading Vectronics collar data...")
+  message("Downloading Vectronic collar data...")
 
   pb <- dplyr::progress_estimated(length(url))
 

@@ -1,59 +1,59 @@
-context("test-fetch_vectronics.R")
+context("test-fetch_vectronic.R")
 
-test_that("Check fetch_vectronics", {
+test_that("Check fetch_vectronic", {
   key_dir <- system.file("extdata", package = "collar")
   keys <- get_paths(key_dir)
 
   expect_condition(
-    fetch_vectronics(),
+    fetch_vectronic(),
     "argument \"key_paths\" is missing, with no default",
     fixed = T
   )
 
   expect_s3_class(
-    all_dat <- fetch_vectronics(keys, type = "gps"),
+    all_dat <- fetch_vectronic(keys, type = "gps"),
     "data.frame"
   )
 
   expect_s3_class(
-    fetch_vectronics(keys, type = "act"),
+    fetch_vectronic(keys, type = "act"),
     "data.frame"
   )
 
   expect_s3_class(
-    fetch_vectronics(keys, type = "mit"),
+    fetch_vectronic(keys, type = "mit"),
     "data.frame"
   )
 
   expect_s3_class(
-    fetch_vectronics(keys, type = "mor"),
+    fetch_vectronic(keys, type = "mor"),
     "data.frame"
   )
 
   expect_s3_class(
-    fetch_vectronics(keys, type = "sep"),
+    fetch_vectronic(keys, type = "sep"),
     "data.frame"
   )
 
   trap_dir <- system.file("extdata", "TrapKeys", package = "collar")
   trap_keys <- get_paths(trap_dir)
   expect_s3_class(
-    fetch_vectronics(trap_keys, type = "trap"),
+    fetch_vectronic(trap_keys, type = "trap"),
     "data.frame"
   )
 
   expect_s3_class(
-    fetch_vectronics(keys, type = "vit"),
+    fetch_vectronic(keys, type = "vit"),
     "data.frame"
   )
 
   id_pos <- all_dat$idposition
   data_id <- id_pos[which(id_pos == (max(id_pos) - 10))]
-  new_dat <- fetch_vectronics(keys, type = "gps", after_data_id = data_id)
+  new_dat <- fetch_vectronic(keys, type = "gps", after_data_id = data_id)
   expect_true(nrow(new_dat) == 10)
 
   after <- "2018-06-30T00:00:00"
-  after_dat <- fetch_vectronics(
+  after_dat <- fetch_vectronic(
     keys,
     type = "gps",
     start_date = after,
@@ -64,7 +64,7 @@ test_that("Check fetch_vectronics", {
 
 })
 
-test_that("Check fetch_vectronics assertions", {
+test_that("Check fetch_vectronic assertions", {
   # Provide after_data_id and start_date, which cannot be true
   expect_condition(
     collar:::build_vec_url(
@@ -88,7 +88,7 @@ test_that("Check fetch_vectronics assertions", {
       start_date = "B",
       which_date = NULL
     ),
-    "The Vectronics API cannot accept both the after_data_id and start_date arguments at the same time.  Please change one or both to NULL."
+    "The Vectronic API cannot accept both the after_data_id and start_date arguments at the same time.  Please change one or both to NULL."
   )
 
   # Bad data type
@@ -421,55 +421,55 @@ test_that("Testing build_vec_url(s) calls", {
 
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "gps"),
+#     fetch_vectronic(keys, type = "gps"),
 #     "data.frame"
 #   )
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "gps", count = T),
+#     fetch_vectronic(keys, type = "gps", count = T),
 #     "data.frame"
 #   )
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "act"),
+#     fetch_vectronic(keys, type = "act"),
 #     "data.frame"
 #   )
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "mit"),
+#     fetch_vectronic(keys, type = "mit"),
 #     "data.frame"
 #   )
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "mor"),
+#     fetch_vectronic(keys, type = "mor"),
 #     "data.frame"
 #   )
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "sep"),
+#     fetch_vectronic(keys, type = "sep"),
 #     "data.frame"
 #   )
 #
 #   trap_dir <- system.file("extdata", "TrapKeys", package = "collar")
 #   trap_keys <- get_paths(trap_dir)
 #   expect_s3_class(
-#     fetch_vectronics(trap_keys, type = "trap"),
+#     fetch_vectronic(trap_keys, type = "trap"),
 #     "data.frame"
 #   )
 #
 #   expect_s3_class(
-#     fetch_vectronics(keys, type = "vit"),
+#     fetch_vectronic(keys, type = "vit"),
 #     "data.frame"
 #   )
 #
-#   all_dat <- fetch_vectronics(keys, type = "gps")
+#   all_dat <- fetch_vectronic(keys, type = "gps")
 #   id_pos <- all_dat$idposition
 #   data_id <- id_pos[which(id_pos == (max(id_pos) - 10))]
-#   new_dat <- fetch_vectronics(keys, type = "gps", after_data_id = data_id)
+#   new_dat <- fetch_vectronic(keys, type = "gps", after_data_id = data_id)
 #   expect_true(nrow(new_dat) == 10)
 #
 #   after <- "2018-06-30T00:00:00"
-#   after_dat <- fetch_vectronics(
+#   after_dat <- fetch_vectronic(
 #     keys,
 #     type = "gps",
 #     start_date = after,
@@ -480,7 +480,7 @@ test_that("Testing build_vec_url(s) calls", {
 #
 # #})
 
-test_that("Check fetch_vectronics assertions", {
+test_that("Check fetch_vectronic assertions", {
   # Provide after_data_id and start_date, which cannot be true
   expect_condition(
     collar:::build_vec_url(
@@ -504,7 +504,7 @@ test_that("Check fetch_vectronics assertions", {
       start_date = "B",
       which_date = NULL
     ),
-    "The Vectronics API cannot accept both the after_data_id and start_date arguments at the same time.  Please change one or both to NULL."
+    "The Vectronic API cannot accept both the after_data_id and start_date arguments at the same time.  Please change one or both to NULL."
   )
 
   # Bad data type

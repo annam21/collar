@@ -4,7 +4,7 @@ test_that("check save_map", {
 
   data_dir <- system.file("extdata", package = "collar")
 
-  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronics_2.csv"))
+  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronic_2.csv"))
 
   dat <-
     tmp %>%

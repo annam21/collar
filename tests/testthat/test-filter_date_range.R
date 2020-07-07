@@ -4,7 +4,7 @@ context("test-filter_date_range.R")
 test_that("Check filter_date_range", {
 
   data_dir <- system.file("extdata", package = "collar")
-  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronics_2.csv"))
+  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronic_2.csv"))
 
   dat <- tmp %>%
     tidyr::drop_na(longitude) %>%
@@ -48,7 +48,7 @@ test_that("Check make_gpx assertions", {
 
   data_dir <- system.file("extdata", package = "collar")
 
-  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronics_2.csv"))
+  tmp <- collar::fetch_csv(paste0(data_dir, "/vectronic_2.csv"))
 
   dat <-
     tmp %>%
